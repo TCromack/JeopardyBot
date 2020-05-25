@@ -14,7 +14,7 @@ var makeRequest = function(endpoint, options, callback) {
 			response.on('end', () => {
 				var body = Buffer.concat(data);
 				
-				resolve(body.toString());
+				resolve(JSON.parse(body.toString()));
 			});
 			
 			response.on('error', (error) => {
@@ -28,7 +28,9 @@ var makeRequest = function(endpoint, options, callback) {
 
 
 var randomQuestion = function(callback) {
-	return makeRequest('random', {}, callback);
+	makeRequest('random', {}, question => {
+		callback(question[0])
+	});
 }
 
 
