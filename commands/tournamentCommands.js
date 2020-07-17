@@ -1,5 +1,5 @@
 const command = require('../command.js');
-const jp = require('../jeopardy.js');
+const jp = require('../util/jeopardy.js');
 
 var startTournamentCommand = command(
 {

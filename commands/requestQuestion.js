@@ -1,30 +1,23 @@
 const command = require('../command.js');
-const jp = require('../jeopardy.js');
+const jp = require('../util/jeopardy.js');
+const ask = require('../quiz/askQuestion.js');
+const answer = require('../quiz/answer.js');
 
-var validateAnswerFilter = function(question){
-	return function(message){
-		message.question = question;
-		return !message.author.bot;
-	};
-	
-};
 
-var correctAnswer = function(message){
-	var points = message.question.value;
-	message.reply(`You earned points`);
-	
+var response = function(message, response, question) {
+	if (answer(question.answer, response)) {
+		message.channel.send(`Correct, ${message.author}.  You earned ${question.value} points.`);
+		// TODO: Add points to db
+		return true;
+	} else {
+		message.reply(`Incorrect, ${message.author}.  You lose ${question.value} points.`);
+		// TODO: Add points to db
+		return false;
+	}
 }
 
-var wrongAnswer = function(message){
-	var points = message.question.value;
-	message.reply(`You lost points`);
-	
-}
-
-var endQuestion = function(message){
-	var answer = message.question.answer;
-	message.channel.send(`The correct answer is answer`);
-	
+var timeout = function(channel, question) {
+	channel.send(`The correct answer is ${question.answer}.`);
 }
 
 var requestQuestion = command(
@@ -32,16 +25,12 @@ var requestQuestion = command(
 	name: "rq"
 },
 
+
 function(message, args) {
 	//Collect user answer and validate Answer
+	console.log(ask);
 	jp.random((question) => {
-		
-		console.log(question);
-		message.channel.send(question.question);
-		var collector = message.channel.createMessageCollector(validateAnswerFilter(question), {time:5000});
-		collector.on("collect", correctAnswer);
-		collector.on("dispose", wrongAnswer);
-		collector.on("end", endQuestion );
+		ask(message.channel, question, response, timeout);
 	});
 });
 

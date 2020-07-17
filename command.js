@@ -1,5 +1,8 @@
 const fs = require('fs');
 
+const config = require("./config.json");
+var prefix = config.prefix;
+
 var commandDefaults = {
 	commandName: "invalidCommand",
 	description: "",
@@ -40,6 +43,22 @@ makeCommand.loadCommands = function(dir) {
 	}
 	
 	makeCommand.commands = commandTable;
+}
+
+makeCommand.dispatch = function(message) {
+	var args = message.content.slice(prefix.length).split(/ +/);
+	var commandName = args.shift().toLowerCase();
+	
+	try {
+		var command = makeCommand.commands[commandName];
+		if (command) {
+			command(message, args);
+		} else {
+			console.log(`No command with name '${commandName}'`);
+		}
+	} catch (error) {
+		console.error(error);
+	}
 }
 
 module.exports = makeCommand;

@@ -14,19 +14,7 @@ client.on("message", message => {
 		return;
 	}
 	
-	var args = message.content.slice(prefix.length).split(/ +/);
-	var commandName = args.shift().toLowerCase();
-	
-	try {
-		var command = commands.commands[commandName];
-		if (command) {
-			command(message, args);
-		} else {
-			console.log(`No command with name '${commandName}'`);
-		}
-	} catch (error) {
-		console.error(error);
-	}
+	commands.dispatch(message);
 });
 
 
