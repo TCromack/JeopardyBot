@@ -1,0 +1,4 @@
+-fix requesting a new question while a user has already request question. (end current question first)
+
+-create database
+--add point to database

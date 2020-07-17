@@ -48,6 +48,9 @@ var timeout = function(channel, question, callback) {
 };
 
 function ask(channel, question, onAnswer, onTimeout) {
+	if(!question.question){
+		return false;
+	}
 	console.log(question);
 	channel.send(question.question);
 	
@@ -66,6 +69,8 @@ function ask(channel, question, onAnswer, onTimeout) {
 	collector.on("dispose", dispose);
 	collector.on("end", timeout(channel, question, onTimeout));
 	guildQuestions[channel.id] = collector;
+
+	return true;
 }
 
 module.exports = ask;

@@ -10,7 +10,7 @@ var response = function(message, response, question) {
 		// TODO: Add points to db
 		return true;
 	} else {
-		message.reply(`Incorrect, ${message.author}.  You lose ${question.value} points.`);
+		message.channel.send(`Incorrect, ${message.author}.  You lose ${question.value} points.`);
 		// TODO: Add points to db
 		return false;
 	}
@@ -29,8 +29,11 @@ var requestQuestion = command(
 function(message, args) {
 	//Collect user answer and validate Answer
 	console.log(ask);
-	jp.random((question) => {
-		ask(message.channel, question, response, timeout);
+	jp.random(function cb(question) {
+		if(!ask(message.channel, question, response, timeout)){
+			jp.random(cb);
+		}
+		
 	});
 });
 
