@@ -18,7 +18,7 @@ var answerAttempted = function(question, callback) {
 				response = response.slice(config.prefix.length);
 				var cmd = response.split(/ +/).shift();
 				if (commands.commands[cmd]) {
-					commands.dispatch(message);
+					// commands.dispatch(message);
 				} else {
 					if (callback(message, response, question)) {
 						collector.stop(ANSWERED_REASON);
