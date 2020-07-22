@@ -1,4 +1,9 @@
 -fix requesting a new question while a user has already request question. (end current question first)
 
--create database
---add point to database
+- Rizez
+
+- create statement to get points from db
+- implement db getPoints function
+- update question to add/subtract points
+- add command to get points for user
+- add command to get leaderboard for guild
