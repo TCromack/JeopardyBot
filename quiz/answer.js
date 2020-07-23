@@ -12,6 +12,6 @@ module.exports = function(correctAnswer, toTest) {
 	.toLowerCase();
 
 	var result = stringSimilarity.compareTwoStrings(correctAnswer, answerText);
-	console.log("%s, %s, %d/n" , correctAnswer, answerText, result);
+	//console.log("%s, %s, %d/n" , correctAnswer, answerText, result);
 	return result > .85;
 }

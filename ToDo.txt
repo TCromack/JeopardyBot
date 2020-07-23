@@ -2,8 +2,4 @@
 
 - Rizez
 
-- create statement to get points from db
-- implement db getPoints function
-- update question to add/subtract points
-- add command to get points for user
 - add command to get leaderboard for guild

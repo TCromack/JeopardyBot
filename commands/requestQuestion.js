@@ -2,16 +2,16 @@ const command = require('../command.js');
 const jp = require('../util/jeopardy.js');
 const ask = require('../quiz/askQuestion.js');
 const answer = require('../quiz/answer.js');
-
+const db = require('../util/db.js');
 
 var response = function(message, response, question) {
 	if (answer(question.answer, response)) {
 		message.channel.send(`Correct, ${message.author}.  You earned ${question.value} points.`);
-		// TODO: Add points to db
+		db.addPoints(message.author.id, message.guild.id, question.value);
 		return true;
 	} else {
 		message.channel.send(`Incorrect, ${message.author}.  You lose ${question.value} points.`);
-		// TODO: Add points to db
+		db.addPoints(message.author.id, message.guild.id, -question.value);
 		return false;
 	}
 }
@@ -24,7 +24,6 @@ var requestQuestion = command(
 {
 	name: "rq"
 },
-
 
 function(message, args) {
 	//Collect user answer and validate Answer

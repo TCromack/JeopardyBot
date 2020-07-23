@@ -35,10 +35,10 @@ makeCommand.loadCommands = function(dir) {
 		
 		if (Array.isArray(command)) {
 			for (var c of command) {
-				commandTable[c.commandName] = c;
+				commandTable[c.commandName.toLowerCase()] = c;
 			}
 		} else {
-			commandTable[command.commandName] = command;
+			commandTable[command.commandName.toLowerCase()] = command;
 		}
 	}
 	
