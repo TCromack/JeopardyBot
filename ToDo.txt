@@ -1,5 +1,1 @@
 -fix requesting a new question while a user has already request question. (end current question first)
-
-- Rizez
-
-- add command to get leaderboard for guild

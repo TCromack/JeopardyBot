@@ -7,10 +7,11 @@ var getPointsCommand = command(
 },
 function(message, args) {
 	db.getPoints(message.author.id, message.guild.id, (points) => {
+        var minus = points < 0 ? "-" : "";
         for(var v in points){
             console.log(v,points[v]);
         }
-        message.channel.send(`Hey ${message.author}, you currently have $${points}!`);
+        message.channel.send(`Hey ${message.author}, you currently have ${minus}$${Math.abs(points)}!`);
     });
 });
 
