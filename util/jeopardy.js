@@ -4,7 +4,11 @@ var jservice = 'https://jservice.io/api/';
 
 var makeRequest = function(endpoint, options, callback) {
 	var call = new Promise((resolve, reject) => {
-		https.get(jservice + endpoint, (response) => {
+		var query = "?";
+		for(option in options){
+			query += `${option}=${options[option]}&`;
+		}
+		https.get(jservice + endpoint + query, (response) => {
 			var data = [];
 			
 			response.on('data', chunk => {
@@ -33,7 +37,14 @@ var randomQuestion = function(callback) {
 	});
 }
 
+var tourneyCategories = function(categoryId, callback) {
+	makeRequest('clues', {"category" : categoryId} , tourney => {
+		callback(tourney)
+	});
+}
+
 
 module.exports = {
-	random: randomQuestion
+	random: randomQuestion,
+	clues: tourneyCategories
 };

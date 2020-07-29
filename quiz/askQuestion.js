@@ -1,5 +1,6 @@
 const config = require("../config.json");
 const commands = require("../command.js");
+const { MessageEmbed } = require('discord.js');
 
 const ANSWERED_REASON = "correct";
 
@@ -48,11 +49,21 @@ var timeout = function(channel, question, callback) {
 };
 
 function ask(channel, question, onAnswer, onTimeout) {
+	let embed = new MessageEmbed();
+	let capitalizeTitle = question.category.title.split(" ");
+	let title = "";
+	for(str of capitalizeTitle){
+		title += " " + str.charAt(0).toUpperCase() + str.slice(1);
+	}
+	title = title.slice(1);
+
 	if(!question.question){
 		return false;
 	}
+	
 	console.log(question);
-	channel.send(question.question);
+	embed.setDescription(question.question);
+	channel.send(`The Category is **${title}** for **$${question.value}**:`, embed);
 	
 	var guildQuestions = activeQuestions[channel.guild.id];
 	if (!guildQuestions) {

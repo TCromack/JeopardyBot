@@ -7,8 +7,8 @@ var startTournamentCommand = command(
 },
 function(message, args) {
 	// do stuff
-	jp.random((question) => {
-		console.log(question);
+	jp.clues(1, (tourney) => {
+		console.log(tourney);
 	});
 });
 
